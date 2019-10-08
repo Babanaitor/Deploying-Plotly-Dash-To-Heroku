@@ -23,16 +23,6 @@ app.layout = html.Div([
             'Drag and Drop or ',
             html.A('Select Files')
         ]),
-        style={
-            'width': '98%',
-            'height': '90%',
-            'lineHeight': '400px',
-            'borderWidth': '3px',
-            'borderStyle': 'dashed',
-            'borderRadius': '5px',
-            'textAlign': 'center',
-            'margin': '10px'
-        },
         multiple=True
     ),
     html.Div(id='output-data-upload'),
@@ -56,12 +46,6 @@ def mainF(file_name):
 
     fig = ff.create_gantt(df1, group_tasks=True, colors=colors, index_col='Complete', reverse_colors=True,
                           show_colorbar=True)
-    # fig['layout']['annotations'] = [
-    #     dict(x='Start', y='Task', text='text', showarrow=False, font=dict(color='black'))]
-
-    # </editor-fold>
-
-    # <editor-fold desc="Map Data">
     map_df = pd.DataFrame()
     map_df['names'] = df['FSS1 assigned'] + '     ' + df['FSS2 assigned']
     map_df['country'] = df['Country']
@@ -99,7 +83,7 @@ def mainF(file_name):
     fig1.update_layout(mapbox_style="carto-positron")
     fig1.update_layout(margin={"r": 20, "t": 20, "l": 20, "b": 20})
 
-    # </editor-fold>
+
 
     url_bar_and_content_div = html.Div([
         dcc.Location(id='url', refresh=False),
@@ -182,7 +166,7 @@ def mainF(file_name):
             return layout_index
 
     if __name__ == '__main__':
-        app.run_server(debug=True)
+        app.run_server()
 
 
 def parse_contents(contents, filename, date):
@@ -205,4 +189,4 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()
