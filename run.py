@@ -4,9 +4,11 @@ import pandas as pd
 import plotly.figure_factory as ff
 import dash
 import dash_table
-import flask
+from flask import (Flask, has_request_context)
 import plotly.express as px
 import numpy as np
+import os
+import xlrd
 from dash.dependencies import Input, Output, State
 
 colors = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)', 'rgb(139,0,0)', 'rgb(0,191,255)',
@@ -14,7 +16,12 @@ colors = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)', 'rgb(139,0,0)', 
           'rgb(107,142,35)', 'rgb(128,128,0)', 'rgb(255,215,0)', 'rgb(255,140,0)', 'rgb(255,0,255)',
           'rgb(210, 19, 180)']
 
-app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+# app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
+
+
 
 app.layout = html.Div([
     dcc.Upload(
@@ -144,7 +151,7 @@ def mainF(file_name):
         style={'text-align': 'center'})
 
     def serve_layout():
-        if flask.has_request_context():
+        if has_request_context():
             return url_bar_and_content_div
         return html.Div([
             url_bar_and_content_div,
@@ -170,7 +177,8 @@ def mainF(file_name):
 
 
 def parse_contents(contents, filename, date):
-    mainF(filename)
+    return mainF(filename)
+
     return html.Div([
         html.H5(filename),
     ])
