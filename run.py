@@ -8,6 +8,7 @@ from flask import (Flask, has_request_context)
 import plotly.express as px
 import numpy as np
 import os
+import xlrd
 from dash.dependencies import Input, Output, State
 
 colors = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)', 'rgb(139,0,0)', 'rgb(0,191,255)',
